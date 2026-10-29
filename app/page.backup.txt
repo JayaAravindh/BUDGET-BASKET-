@@ -1,0 +1,479 @@
+import HeroCarousel from "./HeroCarousel";
+import AddToCartButton from "./AddToCartButton";
+
+const categories = [
+  { name: "Kitchen Essentials", icon: "🍳" },
+  { name: "Home & Living", icon: "🏠" },
+  { name: "Fashion & Bags", icon: "👜" },
+  { name: "Gadgets", icon: "🎧" },
+  { name: "Toys & Games", icon: "🧸" },
+  { name: "Storage & Organisers", icon: "🧺" },
+  { name: "Cleaning Essentials", icon: "🧹" },
+  { name: "Daily Use Products", icon: "✨" },
+];
+
+const products = [
+  {
+    id: 1,
+    name: "Multi-Purpose Kitchen Chopper",
+    price: 160,
+    originalPrice: 299,
+    icon: "🥗",
+    category: "Kitchen",
+  },
+  {
+    id: 2,
+    name: "Premium Water Bottle",
+    price: 160,
+    originalPrice: 249,
+    icon: "🧴",
+    category: "Home & Living",
+  },
+  {
+    id: 3,
+    name: "Mini Handheld Vacuum Cleaner",
+    price: 260,
+    originalPrice: 499,
+    icon: "🧹",
+    category: "Gadgets",
+  },
+  {
+    id: 4,
+    name: "Stylish Everyday Handbag",
+    price: 260,
+    originalPrice: 499,
+    icon: "👜",
+    category: "Fashion",
+  },
+  {
+    id: 5,
+    name: "Ceramic Coffee Mug",
+    price: 160,
+    originalPrice: 299,
+    icon: "☕",
+    category: "Kitchen",
+  },
+  {
+    id: 6,
+    name: "LED Decorative Light",
+    price: 160,
+    originalPrice: 349,
+    icon: "💡",
+    category: "Home & Living",
+  },
+  {
+    id: 7,
+    name: "Kids Building Toy Set",
+    price: 260,
+    originalPrice: 499,
+    icon: "🧸",
+    category: "Toys",
+  },
+  {
+    id: 8,
+    name: "Home Storage Organiser",
+    price: 160,
+    originalPrice: 299,
+    icon: "🧺",
+    category: "Storage",
+  },
+];
+
+export default function Home() {
+  return (
+    <main className="min-h-screen bg-white text-gray-900">
+      {/* Announcement bar */}
+      <div className="bg-red-600 px-4 py-2 text-center text-sm font-bold text-white">
+        Welcome to Budget Basket! Shop More, Spend Less.
+      </div>
+
+      {/* Header */}
+      <header className="border-b border-gray-100 bg-white">
+        <div className="mx-auto flex max-w-[1500px] flex-wrap items-center justify-between gap-4 px-5 py-4 md:px-10">
+          <a href="/" className="flex shrink-0 items-center">
+            <img
+              src="/images/budget-basket-logo.png"
+              alt="Budget Basket - Home & More"
+              className="h-auto w-[175px] object-contain md:w-[205px]"
+            />
+          </a>
+
+          {/* Search bar */}
+          <form
+            action="/shop"
+            method="get"
+            className="order-3 flex w-full overflow-hidden rounded-full border-2 border-yellow-400 md:order-none md:max-w-xl md:flex-1"
+          >
+            <input
+              type="search"
+              name="q"
+              placeholder="Search for products..."
+              aria-label="Search products"
+              className="min-w-0 flex-1 px-5 py-3 text-sm outline-none"
+            />
+
+            <button
+              type="submit"
+              className="bg-yellow-400 px-6 font-bold text-gray-900 transition hover:bg-yellow-500"
+            >
+              Search
+            </button>
+          </form>
+
+          {/* Account and shopping links */}
+          <div className="flex items-center gap-4 text-sm font-semibold">
+            <a
+              href="/account"
+              className="hidden transition hover:text-red-600 sm:block"
+            >
+              <span className="mr-1 text-xl">👤</span>
+              Account
+            </a>
+
+            <a
+              href="/wishlist"
+              className="flex items-center gap-1 transition hover:text-red-600"
+            >
+              <span className="text-xl">♡</span>
+              <span className="hidden sm:inline">Wishlist</span>
+            </a>
+
+            <a
+              href="/cart"
+              className="flex items-center gap-1 transition hover:text-red-600"
+            >
+              <span className="text-xl">🛒</span>
+              <span className="hidden sm:inline">Cart</span>
+            </a>
+          </div>
+        </div>
+      </header>
+
+      {/* Navigation */}
+      <nav className="bg-yellow-400 shadow-sm">
+        <div className="mx-auto flex max-w-[1500px] gap-7 overflow-x-auto whitespace-nowrap px-5 py-3 text-sm font-bold md:justify-center md:px-10">
+          <a href="#categories" className="hover:text-red-700">
+            All Categories
+          </a>
+          <a href="#categories" className="hover:text-red-700">
+            Home & Living
+          </a>
+          <a href="#categories" className="hover:text-red-700">
+            Kitchen
+          </a>
+          <a href="#categories" className="hover:text-red-700">
+            Fashion & Bags
+          </a>
+          <a href="#categories" className="hover:text-red-700">
+            Gadgets
+          </a>
+          <a href="#categories" className="hover:text-red-700">
+            Toys & Games
+          </a>
+          <a href="#best-sellers" className="hover:text-red-700">
+            Best Sellers
+          </a>
+        </div>
+      </nav>
+
+      {/* Rotating hero banner */}
+      <HeroCarousel />
+
+      {/* Categories */}
+      <section
+        id="categories"
+        className="mx-auto max-w-[1500px] px-5 py-14 md:px-10"
+      >
+        <div className="mb-8 text-center">
+          <p className="text-sm font-bold uppercase tracking-widest text-red-600">
+            Explore Our Collection
+          </p>
+
+          <h2 className="mt-2 text-3xl font-black md:text-4xl">
+            Shop by Category
+          </h2>
+
+          <p className="mt-3 text-gray-500">
+            Find something useful for every corner of your home.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-8">
+          {categories.map((category) => (
+            <a
+              href="/shop"
+              key={category.name}
+              className="group flex flex-col items-center rounded-2xl border border-gray-100 bg-white p-5 text-center shadow-sm transition hover:-translate-y-1 hover:border-yellow-400 hover:shadow-lg"
+            >
+              <span className="flex h-16 w-16 items-center justify-center rounded-full bg-yellow-50 text-4xl transition group-hover:bg-yellow-100">
+                {category.icon}
+              </span>
+
+              <span className="mt-3 text-sm font-bold">
+                {category.name}
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {/* Promotional banners */}
+      <section className="mx-auto grid max-w-[1500px] gap-6 px-5 pb-14 md:grid-cols-2 md:px-10">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-red-600 to-red-500 p-8 text-white md:p-12">
+          <div className="relative z-10 max-w-md">
+            <span className="rounded-full bg-yellow-400 px-4 py-2 text-xs font-black uppercase text-gray-900">
+              Budget Friendly
+            </span>
+
+            <h2 className="mt-6 text-3xl font-black md:text-4xl">
+              Everyday Essentials
+            </h2>
+
+            <p className="mt-3 leading-7 text-white/90">
+              Discover useful products for your home and everyday life.
+            </p>
+
+            <a
+              href="/shop"
+              className="mt-6 inline-flex rounded-full bg-yellow-400 px-6 py-3 font-bold text-gray-900 transition hover:bg-yellow-300"
+            >
+              Explore Products →
+            </a>
+          </div>
+
+          <span className="absolute -right-5 -top-8 text-[180px] opacity-20">
+            🛍️
+          </span>
+        </div>
+
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-yellow-200 to-amber-100 p-8 md:p-12">
+          <div className="relative z-10 max-w-md">
+            <span className="rounded-full bg-white px-4 py-2 text-xs font-black uppercase text-red-600">
+              Smart Shopping
+            </span>
+
+            <h2 className="mt-6 text-3xl font-black md:text-4xl">
+              More Variety.
+              <span className="block text-red-600">
+                Better Value.
+              </span>
+            </h2>
+
+            <p className="mt-3 leading-7 text-gray-700">
+              Shop kitchen products, gadgets, fashion accessories and more.
+            </p>
+
+            <a
+              href="/shop"
+              className="mt-6 inline-flex rounded-full bg-red-600 px-6 py-3 font-bold text-white transition hover:bg-red-700"
+            >
+              Shop Now →
+            </a>
+          </div>
+
+          <span className="absolute -right-4 -top-5 text-[180px] opacity-20">
+            🎁
+          </span>
+        </div>
+      </section>
+
+      {/* Best-selling products */}
+      <section id="best-sellers" className="bg-gray-50 py-14">
+        <div className="mx-auto max-w-[1500px] px-5 md:px-10">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="text-sm font-bold uppercase tracking-widest text-red-600">
+                Customer Favourites
+              </p>
+
+              <h2 className="mt-2 text-3xl font-black md:text-4xl">
+                Best Sellers
+              </h2>
+
+              <p className="mt-2 text-gray-500">
+                Discover popular picks from Budget Basket.
+              </p>
+            </div>
+
+            <a
+              href="/shop"
+              className="font-bold text-red-600 transition hover:text-red-800"
+            >
+              View All Products →
+            </a>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            {products.map((product) => (
+              <article
+                key={product.id}
+                className="group overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+              >
+                <a href={`/product/${product.id}`} className="block">
+                  <div className="relative flex h-44 items-center justify-center bg-gradient-to-br from-yellow-50 to-orange-50 sm:h-56">
+                    <span className="absolute left-3 top-3 rounded-full bg-red-600 px-3 py-1 text-xs font-bold text-white">
+                      Popular
+                    </span>
+
+                    <span className="text-7xl transition duration-300 group-hover:scale-110 sm:text-8xl">
+                      {product.icon}
+                    </span>
+                  </div>
+
+                  <div className="p-4">
+                    <p className="text-xs font-semibold text-gray-400">
+                      {product.category}
+                    </p>
+
+                    <h3 className="mt-2 min-h-10 text-sm font-bold leading-5 text-gray-800 sm:text-base">
+                      {product.name}
+                    </h3>
+
+                    <div className="mt-3 flex flex-wrap items-center gap-2">
+                      <span className="text-xl font-black text-red-600">
+                        ₹{product.price}
+                      </span>
+
+                      <span className="text-sm text-gray-400 line-through">
+                        ₹{product.originalPrice}
+                      </span>
+                    </div>
+
+                    <p className="mt-2 text-xs font-bold text-green-600">
+                      You save ₹{product.originalPrice - product.price}
+                    </p>
+                  </div>
+                </a>
+
+                {/* Client Component: handles the click event */}
+                <div className="px-4 pb-4">
+                  <AddToCartButton />
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Shopping benefits */}
+      <section className="border-y border-gray-100 bg-white">
+        <div className="mx-auto grid max-w-[1500px] grid-cols-2 gap-6 px-5 py-10 md:grid-cols-4 md:px-10">
+          <div className="text-center">
+            <span className="text-3xl">🚚</span>
+            <h3 className="mt-3 font-bold">Delivery Options</h3>
+            <p className="mt-1 text-sm text-gray-500">
+              Delivery details at checkout
+            </p>
+          </div>
+
+          <div className="text-center">
+            <span className="text-3xl">💰</span>
+            <h3 className="mt-3 font-bold">Budget-Friendly Prices</h3>
+            <p className="mt-1 text-sm text-gray-500">
+              Great value for everyday shopping
+            </p>
+          </div>
+
+          <div className="text-center">
+            <span className="text-3xl">🔒</span>
+            <h3 className="mt-3 font-bold">Secure Shopping</h3>
+            <p className="mt-1 text-sm text-gray-500">
+              Checkout security to be configured
+            </p>
+          </div>
+
+          <div className="text-center">
+            <span className="text-3xl">💬</span>
+            <h3 className="mt-3 font-bold">Customer Support</h3>
+            <p className="mt-1 text-sm text-gray-500">
+              We're here to help
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-950 text-white">
+        <div className="mx-auto grid max-w-[1500px] gap-10 px-5 py-12 sm:grid-cols-2 md:grid-cols-4 md:px-10">
+          <div>
+            <a href="/" className="inline-block rounded-xl bg-white p-3">
+              <img
+                src="/images/budget-basket-logo.png"
+                alt="Budget Basket"
+                className="h-auto w-44 object-contain"
+              />
+            </a>
+
+            <p className="mt-4 max-w-xs text-sm leading-6 text-gray-300">
+              Budget Basket — Home & More. Discover everyday essentials at
+              prices you'll love.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-bold text-yellow-400">
+              Quick Links
+            </h3>
+
+            <div className="mt-4 flex flex-col gap-3 text-sm text-gray-300">
+              <a href="/" className="hover:text-yellow-400">
+                Home
+              </a>
+              <a href="/shop" className="hover:text-yellow-400">
+                Shop Products
+              </a>
+              <a href="#categories" className="hover:text-yellow-400">
+                Categories
+              </a>
+              <a href="#best-sellers" className="hover:text-yellow-400">
+                Best Sellers
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-bold text-yellow-400">
+              Customer Service
+            </h3>
+
+            <div className="mt-4 flex flex-col gap-3 text-sm text-gray-300">
+              <a href="/contact" className="hover:text-yellow-400">
+                Contact Us
+              </a>
+              <a href="/shipping" className="hover:text-yellow-400">
+                Shipping Information
+              </a>
+              <a href="/returns" className="hover:text-yellow-400">
+                Returns & Refunds
+              </a>
+              <a href="/privacy" className="hover:text-yellow-400">
+                Privacy Policy
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-bold text-yellow-400">
+              Budget Basket
+            </h3>
+
+            <p className="mt-4 text-sm leading-6 text-gray-300">
+              Your destination for home essentials, kitchen products, fashion
+              accessories, gadgets and more.
+            </p>
+
+            <p className="mt-4 font-bold">
+              Pick Anything{" "}
+              <span className="text-yellow-400">160 & 260</span>
+            </p>
+          </div>
+        </div>
+
+        {/* Fixed year avoids the prerendering error */}
+        <div className="border-t border-white/10 px-5 py-5 text-center text-sm text-gray-400">
+          © 2026 Budget Basket. All rights reserved.
+        </div>
+      </footer>
+    </main>
+  );
+}

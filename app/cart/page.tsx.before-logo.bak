@@ -1,0 +1,211 @@
+﻿"use client";
+
+import Link from "next/link";
+import { useCart } from "../../components/CartContext";
+
+const FREE_DELIVERY_THRESHOLD = 599;
+const DELIVERY_CHARGE = 50;
+
+export default function CartPage() {
+  const {
+    items,
+    ready,
+    subtotal,
+    itemCount,
+    changeQuantity,
+    removeItem,
+  } = useCart();
+
+  if (!ready) {
+    return (
+      <main className="min-h-screen bg-gray-50 p-8 text-center">
+        <p className="text-lg font-semibold">Loading your cart...</p>
+      </main>
+    );
+  }
+
+  const deliveryCharge =
+    subtotal === 0 || subtotal >= FREE_DELIVERY_THRESHOLD
+      ? 0
+      : DELIVERY_CHARGE;
+
+  const total = subtotal + deliveryCharge;
+  const amountRemaining = Math.max(0, FREE_DELIVERY_THRESHOLD - subtotal);
+  const progress = Math.min(
+    100,
+    (subtotal / FREE_DELIVERY_THRESHOLD) * 100
+  );
+
+  return (
+    <main className="min-h-screen bg-gray-50 px-4 py-10 sm:px-6">
+      <div className="mx-auto max-w-6xl">
+        <Link
+          href="/"
+          className="mb-6 inline-block font-semibold text-gray-700 hover:text-red-600"
+        >
+          ← Continue Shopping
+        </Link>
+
+        <h1 className="mb-2 text-3xl font-extrabold text-gray-900">
+          Your Shopping Cart
+        </h1>
+
+        <p className="mb-8 text-gray-600">
+          {itemCount} {itemCount === 1 ? "item" : "items"} in your cart
+        </p>
+
+        {items.length === 0 ? (
+          <section className="rounded-2xl bg-white p-10 text-center shadow-sm">
+            <div className="mb-4 text-6xl">🛒</div>
+            <h2 className="mb-2 text-xl font-bold text-gray-900">
+              Your cart is empty
+            </h2>
+            <p className="mb-6 text-gray-600">
+              Find something useful for your home at Budget Basket.
+            </p>
+            <Link
+              href="/"
+              className="inline-block rounded-full bg-yellow-400 px-8 py-3 font-bold text-gray-900 hover:bg-yellow-500"
+            >
+              Start Shopping
+            </Link>
+          </section>
+        ) : (
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+            <section className="space-y-4 lg:col-span-2">
+              {items.map((item) => (
+                <article
+                  key={item.id}
+                  className="flex flex-col gap-4 rounded-2xl bg-white p-4 shadow-sm sm:flex-row sm:items-center"
+                >
+                  <div className="flex h-28 w-full shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gray-100 sm:w-28">
+                    {item.image_url ? (
+                      <img
+                        src={item.image_url}
+                        alt={item.name}
+                        className="h-full w-full object-contain"
+                      />
+                    ) : (
+                      <span className="text-4xl">🛍️</span>
+                    )}
+                  </div>
+
+                  <div className="min-w-0 flex-1">
+                    <h2 className="font-bold text-gray-900">
+                      {item.name}
+                    </h2>
+                    <p className="mt-1 text-lg font-extrabold text-gray-900">
+                      ₹{item.selling_price.toLocaleString("en-IN")}
+                    </p>
+                    <p className="mt-1 text-sm text-gray-500">
+                      Maximum available: {item.stock_quantity}
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        changeQuantity(item.id, item.quantity - 1)
+                      }
+                      disabled={item.quantity <= 1}
+                      aria-label={`Decrease quantity of ${item.name}`}
+                      className="h-9 w-9 rounded-full border border-gray-300 font-bold disabled:opacity-40"
+                    >
+                      −
+                    </button>
+
+                    <span className="min-w-6 text-center font-bold">
+                      {item.quantity}
+                    </span>
+
+                    <button
+                      type="button"
+                      onClick={() =>
+                        changeQuantity(item.id, item.quantity + 1)
+                      }
+                      disabled={item.quantity >= item.stock_quantity}
+                      aria-label={`Increase quantity of ${item.name}`}
+                      className="h-9 w-9 rounded-full border border-gray-300 font-bold disabled:opacity-40"
+                    >
+                      +
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => removeItem(item.id)}
+                      className="ml-2 text-sm font-semibold text-red-600 hover:text-red-800"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </section>
+
+            <aside className="h-fit rounded-2xl bg-white p-6 shadow-sm">
+              <h2 className="mb-5 text-xl font-extrabold text-gray-900">
+                Order Summary
+              </h2>
+
+              <div className="mb-4 rounded-xl bg-yellow-50 p-4">
+                {amountRemaining > 0 ? (
+                  <p className="text-sm font-semibold text-gray-800">
+                    Add ₹{amountRemaining.toLocaleString("en-IN")} more to
+                    unlock FREE delivery!
+                  </p>
+                ) : (
+                  <p className="font-bold text-green-700">
+                    🎉 Congratulations! You unlocked FREE delivery.
+                  </p>
+                )}
+
+                <div className="mt-3 h-2 overflow-hidden rounded-full bg-gray-200">
+                  <div
+                    className="h-full rounded-full bg-yellow-400 transition-all"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-3 border-b border-gray-200 pb-4">
+                <div className="flex justify-between gap-4 text-gray-600">
+                  <span>Subtotal</span>
+                  <span>₹{subtotal.toLocaleString("en-IN")}</span>
+                </div>
+
+                <div className="flex justify-between gap-4 text-gray-600">
+                  <span>Delivery</span>
+                  <span>
+                    {deliveryCharge === 0
+                      ? "FREE"
+                      : `₹${deliveryCharge}`}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex justify-between gap-4 py-5 text-lg font-extrabold">
+                <span>Total</span>
+                <span>₹{total.toLocaleString("en-IN")}</span>
+              </div>
+
+              <button
+                type="button"
+                disabled
+                className="w-full cursor-not-allowed rounded-full bg-gray-300 py-3 font-bold text-gray-600"
+              >
+                Checkout — Coming Soon
+              </button>
+
+              <p className="mt-4 text-xs leading-5 text-gray-500">
+                Free delivery applies to orders of ₹599 or more. The ₹50
+                delivery charge is provisional and should be confirmed
+                before accepting customer orders.
+              </p>
+            </aside>
+          </div>
+        )}
+      </div>
+    </main>
+  );
+}
